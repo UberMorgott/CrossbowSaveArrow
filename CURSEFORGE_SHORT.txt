@@ -1,0 +1,1 @@
+In vanilla, arrows vanish when you switch away from a crossbow. This mod fixes that — each crossbow now remembers its loaded arrows. Switch weapons, drop, trade, or store in chests without losing ammo. Event-based, zero tick overhead. Requires Hyxin.

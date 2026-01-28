@@ -1,0 +1,23 @@
+{
+  "Group": "Morgott",
+  "Name": "CrossbowSaveArrow",
+  "Version": "1.0.0",
+  "Description": "Per-crossbow ammo storage. Each crossbow remembers its loaded arrows when switching weapons.",
+  "Authors": [
+    {
+      "Name": "Morgott"
+    }
+  ],
+  "Main": "morgott.crossbowsavearrow.CrossbowSaveArrow",
+  "ServerVersion": "*",
+  "Dependencies": {},
+  "OptionalDependencies": {},
+  "DisabledByDefault": false,
+  "IncludesAssetPack": false,
+  "early": true,
+  "Hyxin": {
+    "Configs": [
+      "crossbowsavearrow.mixins.json"
+    ]
+  }
+}
