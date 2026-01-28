@@ -49,6 +49,8 @@ This mod uses an **event-based architecture** with Mixin injection rather than t
 
 3. Launch the game and load the world
 
+> **Linux users:** The folder must be named exactly `earlyplugins` (lowercase). Linux is case-sensitive, so `EarlyPlugins` won't work.
+
 ### Dedicated Server
 
 1. Download `Hyxin.jar` and place it in:
