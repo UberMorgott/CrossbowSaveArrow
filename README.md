@@ -58,9 +58,9 @@ This mod uses an **event-based architecture** with Mixin injection rather than t
    <ServerRoot>/EarlyPlugins/
    ```
 
-2. Download `CrossbowSaveArrow-1.0.0.jar` and place it in the world's earlyplugins:
+2. Download `CrossbowSaveArrow-1.0.0.jar` and place it in:
    ```
-   <ServerRoot>/Saves/<WorldName>/earlyplugins
+   <ServerRoot>/EarlyPlugins/
    ```
 
 3. Start the server
