@@ -55,13 +55,15 @@ This mod uses an **event-based architecture** with Mixin injection rather than t
 
 1. Download `Hyxin.jar` and place it in:
    ```
-   <ServerRoot>/EarlyPlugins/
+   <ServerRoot>/earlyplugins/
    ```
 
 2. Download `CrossbowSaveArrow-1.0.0.jar` and place it in:
    ```
-   <ServerRoot>/EarlyPlugins/
+   <ServerRoot>/earlyplugins/
    ```
+
+> **Linux users:** The folder must be named exactly `earlyplugins` (lowercase). Linux is case-sensitive.
 
 3. Start the server
 
