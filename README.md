@@ -1,20 +1,14 @@
 # CrossbowSaveArrow
 
+[![en](https://img.shields.io/badge/lang-English-blue)](README.md) [![ru](https://img.shields.io/badge/lang-Русский-green)](README.ru.md)
+
 Per-crossbow ammo storage for Hytale. Each crossbow remembers its loaded arrows independently.
 
-Мод для Hytale, сохраняющий стрелы в каждом арбалете индивидуально.
-
----
-
-## The Problem / Проблема
+## The Problem
 
 In vanilla Hytale, **arrows are lost when you switch away from a crossbow**. If you loaded 4 arrows and switch to a sword, those arrows vanish. This happens because ammo is stored as an entity stat (on the player), not on the item itself. When the weapon modifier is removed on switch, `clamp(ammo, 0, 0) = 0` — arrows gone forever.
 
-В ванильной Hytale **стрелы теряются при смене оружия**. Если зарядить 4 стрелы и переключиться на меч — стрелы пропадают. Ammo хранится как стат сущности (игрока), а не предмета. При снятии модификатора оружия `clamp(ammo, 0, 0) = 0` — стрелы потеряны навсегда.
-
----
-
-## Features / Возможности
+## Features
 
 - **Arrows persist on weapon switch** — each crossbow stores its own arrow count in ItemStack metadata
 - **Deferred arrow consumption** — arrows are removed from inventory only AFTER ammo actually increases, preventing loss on interrupted reload
@@ -23,18 +17,7 @@ In vanilla Hytale, **arrows are lost when you switch away from a crossbow**. If 
 - **Persistent storage** — ammo is saved when you: switch weapons, drop, store in chest, trade, relog
 - **Zero performance overhead** — event-based architecture, no tick polling
 
----
-
-- **Стрелы сохраняются при смене оружия** — каждый арбалет хранит свой счётчик стрел в metadata предмета
-- **Отложенное списание стрел** — стрела удаляется из инвентаря только ПОСЛЕ увеличения ammo, предотвращая потерю при прерванной перезарядке
-- **Без дублирования стрел** — ванильный возврат стрел при SwapFrom заблокирован
-- **UUID трекинг** — каждый арбалет получает уникальный ID
-- **Персистентное хранение** — ammo сохраняется при: смене оружия, дропе, хранении в сундуке, торговле, перелогине
-- **Нулевой оверхед** — событийная архитектура, без тик-поллинга
-
----
-
-## Architecture / Архитектура
+## Architecture
 
 4 Mixins injected via Hyxin:
 
@@ -49,30 +32,26 @@ Cross-classloader shared state via `System.getProperties()` (Mixin classloader c
 
 ```
 ItemStack metadata (source of truth)
-├── LoadedAmmo: float    — current arrow count
-└── CrossbowUUID: string — unique crossbow identifier
++-- LoadedAmmo: float    -- current arrow count
++-- CrossbowUUID: string -- unique crossbow identifier
 ```
 
----
-
-## Requirements / Требования
+## Requirements
 
 - **Hyxin** — Mixin loader for Hytale
   - [CurseForge](https://www.curseforge.com/hytale/mods/hyxin)
   - [GitHub](https://github.com/Jenya705/Hyxin)
 
----
+## Installation
 
-## Installation / Установка
-
-### Single Player / Одиночная игра
+### Single Player / Client-Hosted Server
 
 1. Download `Hyxin.jar` and place it in:
    ```
    UserData/EarlyPlugins/
    ```
 
-2. Download `CrossbowSaveArrow-0.0.2.jar` and place it in your **world save folder**:
+2. Download `CrossbowSaveArrow-x.x.x.jar` and place it in your **world save folder**:
    ```
    UserData/Saves/<YourWorldName>/earlyplugins
    ```
@@ -82,14 +61,14 @@ ItemStack metadata (source of truth)
 
 > **Linux users:** The folder must be named exactly `earlyplugins` (lowercase). Linux is case-sensitive, so `EarlyPlugins` won't work.
 
-### Dedicated Server / Выделенный сервер
+### Dedicated Server
 
 1. Download `Hyxin.jar` and place it in:
    ```
    <ServerRoot>/earlyplugins/
    ```
 
-2. Download `CrossbowSaveArrow-0.0.2.jar` and place it in:
+2. Download `CrossbowSaveArrow-x.x.x.jar` and place it in:
    ```
    <ServerRoot>/earlyplugins/
    ```
@@ -97,8 +76,6 @@ ItemStack metadata (source of truth)
 > **Linux users:** The folder must be named exactly `earlyplugins` (lowercase). Linux is case-sensitive.
 
 3. Start the server
-
----
 
 ## Changelog
 
@@ -128,14 +105,10 @@ Complete rewrite of the ammo storage system. 2 mixins -> 4 mixins.
 
 Initial release. 2 mixins: `StatModifiersManagerMixin` (HEAD+RETURN), `ModifyInventoryInteractionMixin` (1 redirect).
 
----
-
-## Compatibility / Совместимость
+## Compatibility
 
 - Works with vanilla crossbows and any modded crossbows that use the standard ammo stat system
 - Compatible with other mods that don't modify crossbow ammo behavior
-
----
 
 ## Credits
 
