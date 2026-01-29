@@ -3,6 +3,8 @@
   "minVersion": "0.8",
   "package": "morgott.crossbowsavearrow.mixin",
   "mixins": [
+    "ItemStackMixin",
+    "EntityStatMapMixin",
     "StatModifiersManagerMixin",
     "ModifyInventoryInteractionMixin"
   ],

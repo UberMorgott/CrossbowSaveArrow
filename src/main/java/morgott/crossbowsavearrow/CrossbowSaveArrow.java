@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 import java.util.logging.Level;
 
 /**
- * CrossbowSaveArrow v1.0.0 - Per-crossbow ammo storage.
+ * CrossbowSaveArrow v0.0.2 - Per-crossbow ammo storage.
  *
  * Each crossbow remembers its loaded arrows in ItemStack metadata.
  * Features:
@@ -35,11 +35,18 @@ public class CrossbowSaveArrow extends JavaPlugin {
 
     @Override
     protected void setup() {
-        getLogger().at(Level.INFO).log("[CrossbowSaveArrow] v1.0.0 Loaded! Each crossbow now stores its own ammo.");
+        getLogger().at(Level.INFO).log("[CrossbowSaveArrow] v0.0.2 Loaded.");
+
+        // Check if Hyxin (mixin system) is available
+        try {
+            Class.forName("org.spongepowered.asm.mixin.Mixin");
+        } catch (ClassNotFoundException e) {
+            getLogger().at(Level.SEVERE).log("[CrossbowSaveArrow] ERROR: Hyxin (Mixin) not detected! The mod requires Hyxin to function. Mixins will NOT be applied.");
+        }
     }
 
     @Override
     protected void shutdown() {
-        getLogger().at(Level.INFO).log("[CrossbowSaveArrow] Stopped!");
+        getLogger().at(Level.INFO).log("[CrossbowSaveArrow] Stopped.");
     }
 }

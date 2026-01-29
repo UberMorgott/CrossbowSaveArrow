@@ -1,1 +1,3 @@
-In vanilla, arrows vanish when you switch away from a crossbow. This mod fixes that — each crossbow now remembers its loaded arrows. Switch weapons, drop, trade, or store in chests without losing ammo. Event-based, zero tick overhead. Requires Hyxin.
+In vanilla, arrows vanish when you switch away from a crossbow. This mod fixes that — each crossbow stores its loaded arrows in item metadata. Arrows persist through weapon switches, drops, chest storage, trades, and relogs. Deferred arrow consumption prevents loss on interrupted reload. Event-based, zero tick overhead. 4 Hyxin mixins. Requires Hyxin.
+
+В ванилле стрелы теряются при смене оружия. Этот мод это исправляет — каждый арбалет хранит заряженные стрелы в metadata предмета. Стрелы сохраняются при смене оружия, дропе, хранении в сундуке, торговле и перелогине. Отложенное списание стрел предотвращает потерю при прерванной перезарядке. Событийная архитектура, нулевой оверхед. 4 Hyxin миксина. Требует Hyxin.

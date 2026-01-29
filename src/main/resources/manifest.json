@@ -1,7 +1,7 @@
 {
   "Group": "Morgott",
   "Name": "CrossbowSaveArrow",
-  "Version": "1.0.0",
+  "Version": "0.0.2",
   "Description": "Per-crossbow ammo storage. Each crossbow remembers its loaded arrows when switching weapons.",
   "Authors": [
     {

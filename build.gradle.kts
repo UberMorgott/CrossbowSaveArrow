@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "morgott"
-version = "1.0.0"
+version = "0.0.2"
 
 repositories {
     mavenCentral()
@@ -34,7 +34,7 @@ tasks {
 
     jar {
         archiveBaseName.set("CrossbowSaveArrow")
-        archiveVersion.set("1.0.0")
+        archiveVersion.set("0.0.2")
     }
 }
 
