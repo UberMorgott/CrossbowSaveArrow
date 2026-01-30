@@ -79,6 +79,20 @@ ItemStack metadata (источник правды)
 
 ## Changelog
 
+### v0.0.3
+
+Универсальное определение оружия — больше не зависит от имени предмета.
+
+**Изменено:**
+- Все 4 миксина больше не проверяют `itemId.contains("Crossbow")` для определения арбалетов
+- `EntityStatMapMixin` — пишет метадату `LoadedAmmo` при любом изменении ammo-стата, независимо от имени предмета
+- `StatModifiersManagerMixin` — определяет оружие по наличию метадаты `LoadedAmmo` вместо имени
+- `ModifyInventoryInteractionMixin` — проверяет наличие метадаты `LoadedAmmo`/`CrossbowUUID` у предмета в руке вместо имени
+- `ItemStackMixin` — проверяет наличие наших ключей в BsonDocument вместо имени предмета
+
+**Исправлено:**
+- Потеря патронов при свапе модовых арбалетов без "Crossbow" в ID (напр. MB crossbows с ID `MasBallestas_Hierro`)
+
 ### v0.0.2
 
 Полный рерайт системы хранения ammo. 2 миксина -> 4 миксина.

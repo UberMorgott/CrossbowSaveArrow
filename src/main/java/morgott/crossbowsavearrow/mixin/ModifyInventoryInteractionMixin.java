@@ -9,6 +9,7 @@ import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 import com.hypixel.hytale.server.core.inventory.container.SimpleItemContainer;
 import com.hypixel.hytale.server.core.inventory.container.CombinedItemContainer;
 import com.hypixel.hytale.server.core.inventory.transaction.ItemStackTransaction;
+import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.CooldownHandler;
@@ -34,6 +35,17 @@ import javax.annotation.Nonnull;
  */
 @Mixin(ModifyInventoryInteraction.class)
 public abstract class ModifyInventoryInteractionMixin {
+
+    @Unique
+    private static final String LOADED_AMMO_KEY = "LoadedAmmo";
+    @Unique
+    private static final String CROSSBOW_UUID_KEY = "CrossbowUUID";
+
+    @Unique
+    private static boolean hasAmmoMetadata(ItemStack item) {
+        return item.getFromMetadataOrNull(LOADED_AMMO_KEY, Codec.FLOAT) != null
+                || item.getFromMetadataOrNull(CROSSBOW_UUID_KEY, Codec.STRING) != null;
+    }
 
     @Unique
     private static final String PROP_PENDING_ARROW = "crossbowsavearrow.pendingArrow";
@@ -92,14 +104,11 @@ public abstract class ModifyInventoryInteractionMixin {
                 ComponentAccessor<EntityStore> accessor = context.getCommandBuffer();
                 if (accessor != null && EntityUtils.getEntity(ref, accessor) instanceof LivingEntity livingEntity) {
                     ItemStack itemInHand = livingEntity.getInventory().getItemInHand();
-                    if (itemInHand != null && !itemInHand.isEmpty()) {
-                        String heldId = itemInHand.getItemId();
-                        if (heldId != null && heldId.contains("Crossbow")) {
-                            getPendingArrow().set(itemToRemove);
-                            getPendingContainer().set(instance);
-                            // Arrow removal deferred to EntityStatMapMixin
-                            return new ItemStackTransaction(true, null, itemToRemove, null, allOrNothing, filter, java.util.Collections.emptyList());
-                        }
+                    if (itemInHand != null && !itemInHand.isEmpty() && hasAmmoMetadata(itemInHand)) {
+                        getPendingArrow().set(itemToRemove);
+                        getPendingContainer().set(instance);
+                        // Arrow removal deferred to EntityStatMapMixin
+                        return new ItemStackTransaction(true, null, itemToRemove, null, allOrNothing, filter, java.util.Collections.emptyList());
                     }
                 }
             }
@@ -130,12 +139,9 @@ public abstract class ModifyInventoryInteractionMixin {
             if (itemId != null && itemId.contains("Arrow")) {
                 if (accessor != null && EntityUtils.getEntity(ref, accessor) instanceof LivingEntity livingEntity) {
                     ItemStack itemInHand = livingEntity.getInventory().getItemInHand();
-                    if (itemInHand != null && !itemInHand.isEmpty()) {
-                        String heldItemId = itemInHand.getItemId();
-                        if (heldItemId != null && heldItemId.contains("Crossbow")) {
-                            // Arrow return blocked, kept in crossbow metadata
-                            return false;
-                        }
+                    if (itemInHand != null && !itemInHand.isEmpty() && hasAmmoMetadata(itemInHand)) {
+                        // Arrow return blocked, kept in weapon metadata
+                        return false;
                     }
                 }
             }

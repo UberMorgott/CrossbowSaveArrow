@@ -139,28 +139,25 @@ public abstract class EntityStatMapMixin {
                 Inventory inventory = entity.getInventory();
                 ItemStack itemInHand = inventory.getItemInHand();
                 if (itemInHand != null && !itemInHand.isEmpty()) {
-                    String itemId = itemInHand.getItemId();
-                    if (itemId != null && itemId.contains("Crossbow")) {
 
-                        // 1. On ammo increase (reload): execute deferred arrow removal
-                        if (ret > currentValue) {
-                            Object pendingArrowObj = getPendingArrow().get();
-                            Object pendingContainerObj = getPendingContainer().get();
-                            if (pendingArrowObj instanceof ItemStack pendingArrow
-                                    && pendingContainerObj instanceof CombinedItemContainer pendingContainer) {
-                                pendingContainer.removeItemStack(pendingArrow, true, false);
-                                // Arrow consumed after ammo increase
-                                getPendingArrow().remove();
-                                getPendingContainer().remove();
-                            }
+                    // 1. On ammo increase (reload): execute deferred arrow removal
+                    if (ret > currentValue) {
+                        Object pendingArrowObj = getPendingArrow().get();
+                        Object pendingContainerObj = getPendingContainer().get();
+                        if (pendingArrowObj instanceof ItemStack pendingArrow
+                                && pendingContainerObj instanceof CombinedItemContainer pendingContainer) {
+                            pendingContainer.removeItemStack(pendingArrow, true, false);
+                            // Arrow consumed after ammo increase
+                            getPendingArrow().remove();
+                            getPendingContainer().remove();
                         }
+                    }
 
-                        // 2. On any ammo change: write to crossbow metadata
-                        ItemContainer hotbar = inventory.getHotbar();
-                        if (hotbar != null) {
-                            byte activeSlot = inventory.getActiveHotbarSlot();
-                            writeAmmoToSlot(hotbar, activeSlot, ret);
-                        }
+                    // 2. On any ammo change: write to weapon metadata
+                    ItemContainer hotbar = inventory.getHotbar();
+                    if (hotbar != null) {
+                        byte activeSlot = inventory.getActiveHotbarSlot();
+                        writeAmmoToSlot(hotbar, activeSlot, ret);
                     }
                 }
             }
@@ -176,9 +173,6 @@ public abstract class EntityStatMapMixin {
     private static void writeAmmoToSlot(ItemContainer hotbar, byte slot, float ammo) {
         ItemStack current = hotbar.getItemStack(slot);
         if (current == null || current.isEmpty()) return;
-
-        String itemId = current.getItemId();
-        if (itemId == null || !itemId.contains("Crossbow")) return;
 
         Float savedValue = current.getFromMetadataOrNull(LOADED_AMMO_KEY, Codec.FLOAT);
         float savedFloat = (savedValue != null) ? savedValue : 0f;

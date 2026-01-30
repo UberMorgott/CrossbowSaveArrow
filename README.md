@@ -79,6 +79,20 @@ ItemStack metadata (source of truth)
 
 ## Changelog
 
+### v0.0.3
+
+Universal weapon detection — no longer relies on item name.
+
+**Changed:**
+- All 4 mixins no longer check `itemId.contains("Crossbow")` to identify crossbows
+- `EntityStatMapMixin` — writes `LoadedAmmo` metadata on any ammo stat change, regardless of item name
+- `StatModifiersManagerMixin` — detects weapons by presence of `LoadedAmmo` metadata instead of name
+- `ModifyInventoryInteractionMixin` — checks for `LoadedAmmo`/`CrossbowUUID` metadata on held item instead of name
+- `ItemStackMixin` — checks for our metadata keys in BsonDocument instead of item name
+
+**Fixed:**
+- Ammo loss on swap with modded crossbows that don't have "Crossbow" in their item ID (e.g. MB crossbows with IDs like `MasBallestas_Hierro`)
+
 ### v0.0.2
 
 Complete rewrite of the ammo storage system. 2 mixins -> 4 mixins.

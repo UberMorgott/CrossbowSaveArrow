@@ -90,19 +90,19 @@ public abstract class StatModifiersManagerMixin {
             return;
         }
 
-        String itemId = itemInHand.getItemId();
-        if (itemId == null || !itemId.contains("Crossbow")) {
+        // Only process weapons that have our metadata (previously loaded ammo)
+        Float savedAmmo = itemInHand.getFromMetadataOrNull(LOADED_AMMO_KEY, Codec.FLOAT);
+        if (savedAmmo == null) {
             return;
         }
 
-        // Ensure crossbow has UUID
+        // Ensure weapon has UUID
         String uuid = itemInHand.getFromMetadataOrNull(CROSSBOW_UUID_KEY, Codec.STRING);
         if (uuid == null) {
             uuid = UUID.randomUUID().toString();
             ItemStack withUUID = itemInHand.withMetadata(CROSSBOW_UUID_KEY, Codec.STRING, uuid);
             hotbar.setItemStackForSlot(currentSlot, withUUID);
             itemInHand = withUUID;
-            // UUID assigned silently
         }
 
         // Restore ammo from metadata
@@ -115,12 +115,10 @@ public abstract class StatModifiersManagerMixin {
         float currentAmmo = ammoStat.get();
         float maxAmmo = ammoStat.getMax();
 
-        Float savedAmmo = itemInHand.getFromMetadataOrNull(LOADED_AMMO_KEY, Codec.FLOAT);
-        if (maxAmmo > 0 && savedAmmo != null && savedAmmo > 0) {
+        if (maxAmmo > 0 && savedAmmo > 0) {
             float restoreValue = Math.min(savedAmmo, maxAmmo);
             if (Math.abs(currentAmmo - restoreValue) > 0.001f) {
                 statMap.setStatValue(EntityStatMap.Predictable.SELF, ammoIndex, restoreValue);
-                // Ammo restored from metadata
             }
         }
     }

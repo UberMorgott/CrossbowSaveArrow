@@ -54,15 +54,17 @@ public abstract class ItemStackMixin {
         BsonDocument thisMeta = this.metadata;
         BsonDocument otherMeta = ((ItemStackMixin) (Object) other).metadata;
 
-        // For non-crossbow items, use original logic
-        if (!this.itemId.contains("Crossbow")) {
+        // For items without our metadata keys, use original logic
+        boolean thisHasOurKeys = hasOurKeys(thisMeta);
+        boolean otherHasOurKeys = hasOurKeys(otherMeta);
+        if (!thisHasOurKeys && !otherHasOurKeys) {
             if (thisMeta == null) {
                 return otherMeta == null;
             }
             return thisMeta.equals(otherMeta);
         }
 
-        // For crossbows, compare metadata ignoring our keys
+        // For items with our metadata, compare ignoring our keys
         BsonDocument cleanA = stripOurKeys(thisMeta);
         BsonDocument cleanB = stripOurKeys(otherMeta);
 
@@ -73,6 +75,11 @@ public abstract class ItemStackMixin {
             return false;
         }
         return cleanA.equals(cleanB);
+    }
+
+    @Unique
+    private static boolean hasOurKeys(@Nullable BsonDocument doc) {
+        return doc != null && (doc.containsKey(LOADED_AMMO_KEY) || doc.containsKey(CROSSBOW_UUID_KEY));
     }
 
     @Unique
